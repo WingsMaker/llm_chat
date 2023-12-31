@@ -12,6 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+function clearscreen() {
+	document.getElementById("messages").innerHTML = ""
+}
+
+function sendqn() {
+	var qn = document.getElementById("input").value;
+		if (qn =="") {
+			return
+		}
+		output(qn);
+}
+
 function addChat(input, product) {
   const messagesContainer = document.getElementById("messages");
 
