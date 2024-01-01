@@ -15,6 +15,14 @@
 			<input id="input" class="input" type="text" cols="50" placeholder="Type something..." autocomplete="off" autofocus="true" />
 			<br>
 			<form>
+			Audio output ?
+			<input type="radio" name="audio" id="silence">No
+			<input type="radio" name="audio" id="tts">Yes
+			<br>
+			Support asean languages ?
+			<input type="radio" name="models" id="palm">No
+			<input type="radio" name="models" id="gemini">Yes
+			<br>
 			<input type="button" onClick="clearscreen()" value="Clear"/>
 			<input type="button" onClick="sendqn()" value="Send"/>
 			</form>
@@ -29,5 +37,12 @@
 <script type="text/javascript" src="constants.js" ></script>
 <script type="text/javascript" src="speech.js" ></script>
 <script type="text/javascript" src="ask-palm.js" ></script>
+
+<script>
+document.getElementById("silence").checked = true;
+document.getElementById("tts").checked = false;
+document.getElementById("palm").checked = true;
+document.getElementById("gemini").checked = false;
+</script>
 
 </html>

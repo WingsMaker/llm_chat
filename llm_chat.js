@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
   const inputField = document.getElementById("input");  
   inputField.addEventListener("keydown", (e) => {
@@ -27,6 +28,7 @@ function sendqn() {
 
 function addChat(input, product) {
   const messagesContainer = document.getElementById("messages");
+	let tts = document.getElementById("tts").checked;
 
   let userDiv = document.createElement("div");
   userDiv.id = "user";
@@ -51,53 +53,59 @@ function addChat(input, product) {
   // Fake delay to seem "real"
   setTimeout(() => {
     botText.innerText = `${product}`;
-    textToSpeech(product)
+	if (tts) {
+		textToSpeech(product);
+	}
   }, 2000
   )
 }
 
 function output(input) {
-  let product;
-
-  // Regex remove non word/space chars
-  // Trim trailing whitespce
-  // Remove digits - not sure if this is best
-  // But solves problem of entering something like 'hi1'
-
-  //let regExp = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/g;
-  //if ( regExp.test(input) == true ) {
-	  //product = "Sorry I can only understand pure english.\nTry: Google Bard\n https://bard.google.com";
-	  //addChat(input, product);
-	  //return
-  //}
-  //let text = input.toLowerCase().replace(/[^\w\s]/gi, "").replace(/[\d]/gi, "").trim(); 
-  let text = input
-  text = text
-    .replace(/ a /g, " ")   // 'tell me a story' -> 'tell me story'
-    .replace(/i feel /g, "")
-    .replace(/whats/g, "what is")
-    .replace(/please /g, "")
-    .replace(/ please/g, "")
-    .replace(/r u/g, "are you");
-  
-
-  if (compare(prompts, replies, text)) { 
-    // Search for exact match in `prompts`
-    product = compare(prompts, replies, text);
-  } else if (text.match(/thank/gi)) {
-    product = "You're welcome!"
-  } else if (text.match(/(corona|covid|virus)/gi)) {
-    // If no match, check if message contains `coronavirus`
-    product = coronavirus[Math.floor(Math.random() * coronavirus.length)];
-  } else {
-    // If all else fails: random alternative
-    //product = alternative[Math.floor(Math.random() * alternative.length)];
-	ask_palm(text);
+	let product;
+	let use_palm = document.getElementById("palm").checked;
+	document.getElementById("input").value = "please wait.....";
+	let text = input;
+	if (use_palm) {
+		let regExp = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/g;
+		if ( regExp.test(input) == true ) {
+			product = "Sorry I can only understand pure english.\nSet the asean languages support to YES below.";
+			addChat(input, product);
+			document.getElementById("input").value = "";
+			return
+		}
+		text = input.toLowerCase().replace(/[^\w\s]/gi, "").replace(/[\d]/gi, "").trim(); 
+	}
+	
+	text = text
+	.replace(/ a /g, " ")   // 'tell me a story' -> 'tell me story'
+	.replace(/i feel /g, "")
+	.replace(/whats/g, "what is")
+	.replace(/please /g, "")
+	.replace(/ please/g, "")
+	.replace(/r u/g, "are you");
+  	
+	if (compare(prompts, replies, text)) { 
+	// Search for exact match in `prompts`
+	product = compare(prompts, replies, text);
+	} else if (text.match(/thank/gi)) {
+	product = "You're welcome!"
+	} else if (text.match(/(corona|covid|virus)/gi)) {
+	// If no match, check if message contains `coronavirus`
+	product = coronavirus[Math.floor(Math.random() * coronavirus.length)];
+	} else {
+	// If all else fails: random alternative
+	//product = alternative[Math.floor(Math.random() * alternative.length)];
+		if (use_palm) {
+			ask_palm(text);
+		} else {
+			ask_gemini(text);
+		}
 	return
-  }
+	}
 
-  // Update DOM
-  addChat(input, product);
+	// Update DOM
+	addChat(input, product);
+	document.getElementById("input").value = "";
 }
 
 function compare(promptsArray, repliesArray, string) {
