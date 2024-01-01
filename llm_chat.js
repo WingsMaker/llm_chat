@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function clearscreen() {
-	document.getElementById("messages").innerHTML = ""
+	document.getElementById("messages").innerHTML = "";
+	document.getElementById("input").value = "";
 }
 
 function sendqn() {
@@ -63,7 +64,14 @@ function output(input) {
   // Remove digits - not sure if this is best
   // But solves problem of entering something like 'hi1'
 
-  let text = input.toLowerCase().replace(/[^\w\s]/gi, "").replace(/[\d]/gi, "").trim();
+  let regExp = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/g;
+  if ( regExp.test(input) == true ) {
+	  product = "Sorry I can only understand pure english.\nTry: Google Bard\n https://bard.google.com";
+	  addChat(input, product);
+	  return
+  }
+
+  let text = input.toLowerCase().replace(/[^\w\s]/gi, "").replace(/[\d]/gi, "").trim(); 
   text = text
     .replace(/ a /g, " ")   // 'tell me a story' -> 'tell me story'
     .replace(/i feel /g, "")
@@ -71,6 +79,7 @@ function output(input) {
     .replace(/please /g, "")
     .replace(/ please/g, "")
     .replace(/r u/g, "are you");
+  
 
   if (compare(prompts, replies, text)) { 
     // Search for exact match in `prompts`
@@ -83,7 +92,7 @@ function output(input) {
   } else {
     // If all else fails: random alternative
     //product = alternative[Math.floor(Math.random() * alternative.length)];
-	ask_palm(input);
+	ask_palm(text);
 	return
   }
 

@@ -7,9 +7,7 @@ function ask_palm(prompt) {
 	let payload;
 	let result;
 	msg = "";
-	// Get your api key from https://makersuite.google.com/app/apikey
-	let apikey = ".............";
-	url = "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key" + apikey;
+	url = "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyCHNsZU2T8NYy_VTfOT1q9Bgow_y-Hp_ss";
 	prompt_text = {
 		'text': prompt
 	}
@@ -30,7 +28,7 @@ function ask_palm(prompt) {
 		addChat(prompt, msg);
 	})
 	.catch(error => {
-		console.error('Error calling PALM2 API:', error);
+		msg = "Error calling api : " + error;
+		addChat(prompt, msg);
 	});
 }
-// explains chatgpt to a 10 years old boy
