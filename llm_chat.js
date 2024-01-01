@@ -18,11 +18,11 @@ function clearscreen() {
 }
 
 function sendqn() {
-	var qn = document.getElementById("input").value;
-		if (qn =="") {
-			return
-		}
-		output(qn);
+	let qn = document.getElementById("input").value;
+	if (qn =="") {
+		return
+	}
+	output(qn);
 }
 
 function addChat(input, product) {
@@ -51,7 +51,7 @@ function addChat(input, product) {
   // Fake delay to seem "real"
   setTimeout(() => {
     botText.innerText = `${product}`;
-    textToSpeech(product)
+    //textToSpeech(product)
   }, 2000
   )
 }
@@ -65,13 +65,14 @@ function output(input) {
   // But solves problem of entering something like 'hi1'
 
   let regExp = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/g;
-  if ( regExp.test(input) == true ) {
-	  product = "Sorry I can only understand pure english.\nTry: Google Bard\n https://bard.google.com";
-	  addChat(input, product);
-	  return
-  }
-
-  let text = input.toLowerCase().replace(/[^\w\s]/gi, "").replace(/[\d]/gi, "").trim(); 
+  //if ( regExp.test(input) == true ) {
+	  //product = "Sorry I can only understand pure english.\nTry: Google Bard\n https://bard.google.com";
+	  //addChat(input, product);
+	  //return
+  //}
+  // translate into english for 千教万教，教人求真；千学万学，学做真人
+  //let text = input.toLowerCase().replace(/[^\w\s]/gi, "").replace(/[\d]/gi, "").trim(); 
+  let text = input
   text = text
     .replace(/ a /g, " ")   // 'tell me a story' -> 'tell me story'
     .replace(/i feel /g, "")
