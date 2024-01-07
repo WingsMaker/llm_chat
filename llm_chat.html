@@ -3,28 +3,33 @@
 
 <head>
 	<title>KH Chatbot</title>
-	<link rel="icon" href="bot.png" />
+	<link rel="icon" type="image/x-icon" href="kh.ico">
 	<link rel="stylesheet" href="llm_chat.css" />
+	<script src="https://wingsmaker.github.io/Github/aes.js"></script>
 </head>
 
 <body>
-	<h1 align="center">KH Chatbot using Google LLM</h1><br><hr>
+	<h1 align="center">KH Chatbot using Google LLM</h1><br>
+	<a href="https://wingsmaker.github.io/Github/khbot.html" style="font-size:12px;color:white">Mobile version</a>
+	<hr>
 	<div id="container" class="container">
-		<div id="chat" class="chat">
+		<div id="chat" class="chat" >
 			<div id="messages" class="messages"></div>
 			<input id="input" class="input" type="text" cols="50" placeholder="Type something..." autocomplete="off" autofocus="true" />
 			<br>
 			<form>
-			<label for="audio">Audio output ?&nbsp&nbsp&nbsp<bksp>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<bksp>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<bksp></label>		
-			<input type="radio" name="audio" id="silence">No
-			<input type="radio" name="audio" id="tts">Yes
+			<label id="langcode">Voice:</label><br>
+			<input type="range" min="0" max="4" value="2" step="1" id="lang" name="lang" />
 			<br>
-			<label for="models">Use Asean languages ?</label>		
-			<input type="radio" name="models" id="palm">No
-			<input type="radio" name="models" id="gemini">Yes
+			<input type="checkbox" id="gemini" value="">
+			<label for="gemini">Use Google Gemini</label>
+			<input type="checkbox" id="tts" value="">
+			<label for="tts">Text to speech</label>
+			<br>
 			<br>
 			<input type="button" onClick="clearscreen()" value="Clear"/>
 			<input type="button" onClick="sendqn()" value="Send"/>
+			<input type="button" onClick="readmsg()" value="Voice"/>
 			</form>
 			<br>
 		</div>
@@ -35,14 +40,31 @@
 
 <script type="text/javascript" src="llm_chat.js" ></script>
 <script type="text/javascript" src="constants.js" ></script>
-<script type="text/javascript" src="speech.js" ></script>
 <script type="text/javascript" src="ask-palm.js" ></script>
 
 <script>
-document.getElementById("silence").checked = true;
+console.clear();
+const synth = window.speechSynthesis;
+let voice = new SpeechSynthesisUtterance();
+var lang_type = ["US Male", "US Female", "SG", "TW", "CN"];
+var voice_type = ["en-US", "en-US-JennyNeural", "en-SG", "zh-TW", "zh-CN"];
+var voice_opt = 2;
+voice.rate = 1;
+voice.pitch = 1; 
+voice.volume = 1;
+voice.lang = voice_type[voice_opt];
 document.getElementById("tts").checked = false;
-document.getElementById("palm").checked = true;
 document.getElementById("gemini").checked = false;
+document.getElementById("langcode").innerText = "Voice Type : " + lang_type[voice_opt];
+
+document.getElementById("lang").oninput = function() {
+	r = document.getElementById("lang").value;
+	var lang = voice_type[r]
+	voice.lang = lang;
+	document.getElementById("langcode").innerText = "Voice Type : " + lang_type[r];
+}
+
+
 </script>
 
 </html>

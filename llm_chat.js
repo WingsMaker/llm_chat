@@ -28,7 +28,7 @@ function sendqn() {
 
 function addChat(input, product) {
   const messagesContainer = document.getElementById("messages");
-	let tts = document.getElementById("tts").checked;
+  let tts = document.getElementById("tts").checked;
 
   let userDiv = document.createElement("div");
   userDiv.id = "user";
@@ -62,10 +62,10 @@ function addChat(input, product) {
 
 function output(input) {
 	let product;
-	let use_palm = document.getElementById("palm").checked;
+	let use_gemini = document.getElementById("gemini").checked;
 	document.getElementById("input").value = "please wait.....";
 	let text = input;
-	if (use_palm) {
+	if (use_gemini == false ) {
 		let regExp = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/g;
 		if ( regExp.test(input) == true ) {
 			product = "Sorry I can only understand pure english.\nSet the asean languages support to YES below.";
@@ -95,10 +95,10 @@ function output(input) {
 	} else {
 	// If all else fails: random alternative
 	//product = alternative[Math.floor(Math.random() * alternative.length)];
-		if (use_palm) {
-			ask_palm(text);
-		} else {
+		if (use_gemini) {
 			ask_gemini(text);
+		} else {
+			ask_palm(text);
 		}
 	return
 	}
@@ -127,4 +127,14 @@ function compare(promptsArray, repliesArray, string) {
     }
   }
   return reply;
+}
+
+function readmsg() {
+	var txt = document.getElementById("input").value;
+	textToSpeech(txt);
+}
+
+function textToSpeech(msg) {
+	voice.text = msg;
+	synth.speak(voice);
 }
