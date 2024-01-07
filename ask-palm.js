@@ -5,9 +5,8 @@ function ask_gemini(qn) {
 	let requestBody;
 	let payload;
 	let yy = new Date().getFullYear().toString();
-	let token = "U2FsdGVkX1+1q1q3vNjaw3lwCs5k/dbn4/u2/YdlKdBRWP50dUOQoh3tOZSxtrsApgcOiTnEjA8jJEiqGdaU+PKIMm/f6eT8lKyFkT7eiO9PyjEfQYuyD7NlKuh3yqtU1ooOLmgicVAE7GoitJ+1FSVDuKaNZv1rXBRxw9PylGt15ABUvBsqazDC70Jib6F9";
 	let msg = "";
-	url =  CryptoJS.AES.decrypt(token, yy).toString(CryptoJS.enc.Utf8);
+	url =  "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=......"; // add your api key
 	prompt_text = {
 		'text': encodeURIComponent(qn)
 	}
