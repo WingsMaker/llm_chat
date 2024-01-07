@@ -4,9 +4,8 @@ function ask_gemini(qn) {
 	let prompt_text;
 	let requestBody;
 	let payload;
-	let yy = new Date().getFullYear().toString();
 	let msg = "";
-	url =  "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=......"; // add your api key
+	url =  "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=...."; // add your api key
 	prompt_text = {
 		'text': encodeURIComponent(qn)
 	}
@@ -45,9 +44,7 @@ function ask_palm(prompt) {
 	let prompt_text;
 	let requestBody;
 	let payload;
-	let yy = new Date().getFullYear().toString();
-	let token = "U2FsdGVkX1+Gi7exaNogbqY7UpTOtaTZ+Oa2UXpI4XKAO6t7FZPpVhPk8OUCpJImbhBZSNWW/WLaZu+8Lj08ofSp2csD4+1oR26Hs4ApggnuBjhmXimuNJcmoAQLdsV1iDQbE4zTanKjVsxpjfmXh5Kd8Y3PkQbwNHue6X2V+5qk5bU7mH4lrWmxBsAnmuAp70dJM6cYgBH5qMoOk5qnVA==";
-	url =  CryptoJS.AES.decrypt(token, yy).toString(CryptoJS.enc.Utf8);
+	url =  "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=......"; // add your api key
 	let msg = "";
 	prompt_text = {
 		'text': prompt
