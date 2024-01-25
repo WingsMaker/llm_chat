@@ -27,9 +27,10 @@
 			<label for="tts">Text to speech</label>
 			<br>
 			<br>
-			<input type="button" onClick="clearscreen()" value="Clear"/>
-			<input type="button" onClick="sendqn()" value="Send"/>
-			<input type="button" onClick="readmsg()" value="Voice"/>
+			<input id="clear" type="button" onClick="clearscreen()" value="Clear"/>
+			<input id="send" type="button" onClick="sendqn()" value="Send"/>
+			<input id="voice" type="button" onClick="readmsg()" value="Voice"/>
+			<input id="screen" type="button" onClick="screen_update()" value="Mobile"/>
 			</form>
 			<br>
 		</div>
@@ -44,6 +45,7 @@
 
 <script>
 console.clear();
+let desktop_mode = 1;
 const synth = window.speechSynthesis;
 let voice = new SpeechSynthesisUtterance();
 var lang_type = ["US Male", "US Female", "SG", "TW", "CN"];
@@ -57,11 +59,60 @@ document.getElementById("tts").checked = false;
 document.getElementById("gemini").checked = false;
 document.getElementById("langcode").innerText = "Voice Type : " + lang_type[voice_opt];
 
+desktop_screen();
+
 document.getElementById("lang").oninput = function() {
 	r = document.getElementById("lang").value;
 	var lang = voice_type[r]
 	voice.lang = lang;
 	document.getElementById("langcode").innerText = "Voice Type : " + lang_type[r];
+}
+
+function screen_update() {
+	desktop_mode = 1 - desktop_mode;
+	if (desktop_mode == 0) {
+		mobile_screen();
+	} else {
+		desktop_screen();
+	}
+}
+
+function mobile_screen() {
+	document.getElementById("chat").style.fontSize = "40px";
+	document.getElementById("input").style.fontSize = "40px";
+	document.getElementById("screen").value = "Desktop";
+	document.getElementById("screen").style.fontSize = "30px";
+	document.getElementById("screen").style.width = "150px";
+	document.getElementById("screen").style.height = "200px";
+	document.getElementById("voice").style.fontSize = "30px";
+	document.getElementById("voice").style.width = "150px";
+	document.getElementById("voice").style.height = "200px";
+	document.getElementById("clear").style.fontSize = "30px";
+	document.getElementById("clear").style.width = "150px";
+	document.getElementById("clear").style.height = "200px";
+	document.getElementById("send").style.fontSize = "30px";
+	document.getElementById("send").style.width = "150px";
+	document.getElementById("send").style.height = "200px";
+	desktop_mode = 0;
+}
+
+function desktop_screen() {
+	document.getElementById("chat").style.fontSize = "20px";
+	document.getElementById("input").style.fontSize = "20px";
+	document.getElementById("screen").value = "Mobile";
+	document.getElementById("screen").style.fontSize = "20px";
+	document.getElementById("screen").style.width = "120px";
+	document.getElementById("screen").style.height = "80px"; 
+	document.getElementById("voice").style.fontSize = "20px";
+	document.getElementById("voice").style.width = "120px";
+	document.getElementById("voice").style.height = "80px";
+	document.getElementById("clear").style.fontSize = "20px";
+	document.getElementById("clear").style.width = "120px";
+	document.getElementById("clear").style.height = "80px";
+	document.getElementById("send").style.fontSize = "20px";
+	document.getElementById("send").style.width = "120px";
+	document.getElementById("send").style.height = "80px";
+	desktop_mode = 1;
 }
 
 
