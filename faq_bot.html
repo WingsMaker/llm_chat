@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="https://wingsmaker.github.io/Github/kh.ico">
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ Bot</title>
+	<script type="text/javascript" src="https://wingsmaker.github.io/Github/jquery.min.js"></script>
+	<script type="text/javascript" src="faqlib.js"></script>
+	<script type="text/javascript" src="strokes_faq.js"></script>
+</head>
+<body>
+	<h2 align="center">FAQ bot</h2><br>
+	<h3 align="center">Upload a text file of FAQ and then starts asking any questions</h3>
+	<hr>
+    <div id="chat-container">
+        <div id="message-panel"></div>
+        <div id="input-bar">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button" onclick="askbot_question()">Send</button>
+        </div>
+        <label class="custom-file-upload">
+            <input id="file-upload" type="file" accept="txt/*.txt" />
+            <img class="upload-icon" src="upload-icon.png" />
+            Upload FAQ text file
+        </label>
+		<br>
+		<input type="button" onClick="demo_strokes()" value="Strokes Demo"
+		style="font-size: 12px;background-color: #4caf50;color: #fff;width: 88px;height: 20px;" />
+    </div>
+</body>
+
+<script>
+console.clear();
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const prompt = urlParams.get('prompt')
+
+var faq_list = [];
+var faq_scores = [];
+
+var messagePanel = document.getElementById("message-panel");
+demo_strokes()
+
+if (prompt != null) {
+	document.getElementById("user-input").value = prompt;
+	askbot_question();
+}
+
+function askbot_question() {
+	if ( faq_list.length == 0 ) {
+		messagePanel.innerHTML = "Please upload the FAQ text file before asking any questions.";
+		return;
+	}
+	var inp = document.getElementById("user-input").value;
+	var qns = inp.toLowerCase();
+	if ( qns.length == 0 ) {
+		return;
+	}
+	var max_score = 0;
+	var msg = "";
+	document.getElementById("user-input").value = "";
+	faq_search(inp);
+	max_score = Math.max.apply(null, faq_scores);
+	n = faq_scores.indexOf(max_score);
+	if (n>=0) {
+		msg = "Result : \n\n" + faq_list[n];
+		post_message( inp, msg );
+	}
+	return;
+}
+
+function post_message(question, answer) {
+	if (answer.trim() == "") {
+		messagePanel.innerHTML = "";
+		return
+	} else {
+		messagePanel.innerHTML = "";
+		var botMessage = document.createElement("div");
+		var botImg = document.createElement("img");
+		botImg.src = "bot.png";
+		botImg.className = "avatar";
+		botMessage.appendChild(botImg);  		
+		var botQn = document.createElement("span");
+		botQn.innerText = question;
+		botMessage.appendChild(botQn);
+		messagePanel.appendChild(botMessage);
+		var botLn = document.createElement("span");
+		botLn.innerHTML = "<br><br>";
+		botMessage.appendChild(botLn);
+		messagePanel.appendChild(botMessage);
+		var botText = document.createElement("span");
+		botText.innerText = answer;
+		botMessage.appendChild(botText);
+		messagePanel.appendChild(botMessage);
+		messagePanel.scrollTop = messagePanel.scrollHeight;		
+	}
+}
+
+const fileUpload = document.getElementById('file-upload');
+
+fileUpload.addEventListener('change', readSingleFile, false);
+
+function readSingleFile(evt) {
+	var fn = fileUpload.value;
+	messagePanel.innerHTML = "Loading " + fn;
+	var f = evt.target.files[0]; 
+	if (f) {
+		var r = new FileReader();
+		r.onload = function(e) { 
+			var t = e.target.result;
+			process_dictionary(t);
+			messagePanel.innerHTML = "file loaded, ready to answer questions.";
+		}
+		r.readAsText(f);
+	} else { 
+		messagePanel.innerHTML = "Failed to load file : " + fn;
+	}
+}
+
+function demo_strokes() {
+	var txt = strokesfaq();
+	process_dictionary( txt );
+	messagePanel.innerHTML = "";
+	document.getElementById("user-input").value = "young people strokes"; // Can young people have strokes ; Compass upgrade ; ZZ_9_5
+}
+
+</script>
+</html>
