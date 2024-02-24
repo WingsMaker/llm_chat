@@ -4,6 +4,4 @@ with Gradio UI.
 
 The code is written using native (vanilla) javascript, no need python codes.
 
-![image](https://github.com/WingsMaker/llm_chat/assets/32192638/13400d4d-0b5d-4181-8073-4774cbaa02eb)
-
-
+![image](https://github.com/WingsMaker/llm_chat/assets/32192638/713fae71-9e36-4a72-b6ca-495ac6735a82)
