@@ -677,8 +677,6 @@ gradio-lite:not(:defined) {
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
   --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: IBM Plex Mono, ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
   --weight-light: 300;
   --weight-regular: 400;
   --weight-medium: 500;
@@ -753,11 +751,6 @@ gradio-lite:not(:defined) {
   --ratio-widescreen: 16/9;
   --ratio-golden: 1.618/1;
   --radius-100: 100%;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
   --radius-full: 9999px;
   --radius-2xl: 16px;
   --radius-3xl: 22px;
