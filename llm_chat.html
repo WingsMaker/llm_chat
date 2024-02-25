@@ -1,121 +1,139 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-US" style="
+		margin: 0;
+		padding: 0;
+		min-height: 100%;
+		display: flex;
+		flex-direction: column;
+	">
 <head>
-	<title>KH Chatbot</title>
-	<link rel="icon" type="image/x-icon" href="https://wingsmaker.github.io/Github/kh.ico">
-	<link rel="stylesheet" href="https://wingsmaker.github.io/Github/llm_chat.css" />
-	<script src="https://wingsmaker.github.io/Github/aes.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">		
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>KH Bot</title>
+	<link rel="icon" type="image/x-icon" href="kh.ico">
+	<link rel="stylesheet" href="khbot01.css">
+	<link rel="stylesheet" href="khbot02.css">
+	<link rel="stylesheet" href="khbot03.css">
+	<script src="jquery-2.2.4.min.js"></script>	
 </head>
 
-<body>
-	<h1 align="center">KH Chatbot using Google LLM</h1><br>
-	<a href="https://wingsmaker.github.io/Github/khbot.html" style="font-size:12px;color:white">Mobile version</a>
-	<hr>
-	<div id="container" class="container">
-		<div id="chat" class="chat" >
-			<div id="messages" class="messages"></div>
-			<input id="input" class="input" type="text" cols="50" placeholder="Type something..." autocomplete="off" autofocus="true" />
-			<br>
-			<form>
-			<label id="langcode">Voice:</label><br>
-			<input type="range" min="0" max="4" value="2" step="1" id="lang" name="lang" />
-			<br>
-			<input type="checkbox" id="gemini" value="">
-			<label for="gemini">Use Google Gemini</label>
-			<input type="checkbox" id="tts" value="">
-			<label for="tts">Text to speech</label>
-			<br>
-			<br>
-			<input id="clear" type="button" onClick="clearscreen()" value="Clear"/>
-			<input id="send" type="button" onClick="sendqn()" value="Send"/>
-			<input id="voice" type="button" onClick="readmsg()" value="Voice"/>
-			<input id="screen" type="button" onClick="screen_update()" value="Mobile"/>
-			</form>
-			<br>
-		</div>
-	</div>
-	<hr>
-	<p>Powered by WingsMaker</p>
+<body style="width: 100%; margin: 0px; padding: 0px; display: flex; flex-direction: column; flex-grow: 1; --chatbot-body-text-size: 16px;" class="dark">
+<div class="gradio-container gradio-container-4-17-0 svelte-182fdeq app" style="min-height: initial; flex-grow: 1;">
+<div class="main svelte-182fdeq">  
+<div class="wrap svelte-2mz9lo" style="min-height: 100%;">
+<div class="contain svelte-2mz9lo" style="flex-grow: 1;">
+<div id="component-2" class="svelte-vt1mxs gap" style="flex-grow: 1; min-width: min(0px, 100%);">
+<div id="component-3" class="block svelte-90oupt padded hide-container" style="border-style: solid; overflow: visible; min-width: min(0px, 100%); border-width: var(--block-border-width);">
+<div class="wrap center full svelte-1occ011 hide" style="position: absolute; padding: 0px;"></div> 
+<div class="svelte-1ed2p3z">
+<div class="prose  svelte-1yrv54" data-testid="markdown" dir="ltr"><span class="md svelte-1syupzx"><h1 style="text-align: center; margin-bottom: 1rem">LLM Chat</h1></span></div></div></div>
+<div id="component-4" class="block svelte-90oupt padded hide-container" style="border-style: solid; overflow: visible; min-width: min(0px, 100%); border-width: var(--block-border-width);">
+<div class="wrap center full svelte-1occ011 hide" style="position: absolute; padding: 0px;"></div> 
+<div class="svelte-1ed2p3z">
+<div class="prose  svelte-1yrv54" data-testid="markdown" dir="ltr"><span class="md svelte-1syupzx"><p>It supports Chinese text.</p></span></div></div></div>
+<div id="component-0" class="block  svelte-90oupt" style="height: 300px; border-style: solid; overflow: hidden; min-width: min(160px, 100%); border-width: var(--block-border-width);"> 
+<div class="wrapper svelte-nab2ao"><label for="" data-testid="block-label" class="svelte-1b6s6s"><span class="svelte-1b6s6s"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--carbon" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path fill="currentColor" d="M17.74 30L16 29l4-7h6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9v2H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4h-4.84Z"></path><path fill="currentColor" d="M8 10h16v2H8zm0 6h10v2H8z"></path></svg></span> Chatbot</label>  
+<div class="bubble-wrap svelte-1lcyrx4" role="log" aria-label="chatbot conversation" aria-live="polite">
+<div class="message-wrap svelte-1lcyrx4 bubble-gap" id="message-panel"></div></div></div></div>
+<div id="component-5" class="svelte-15lo0d8 stretch"><button class="sm secondary  svelte-cmf5ev" id="component-6"> Clear</button></div>
+<div id="component-7" class="gr-group  svelte-iyf88w">
+<div class="styler svelte-iyf88w" style="--block-radius: 0px; --block-border-width: 0px; --layout-gap: 1px; --form-gap-width: 1px; --button-border-width: 0px; --button-large-radius: 0px; --button-small-radius: 0px;">
+<div id="component-8" class="svelte-15lo0d8 stretch">
+<div id="component-1" class="block  svelte-90oupt" style="border-style: solid; overflow: hidden; flex-grow: 7; min-width: min(160px, 100%); border-width: var(--block-border-width);"> 
+<label class="svelte-1f354aw">
+<textarea data-testid="textbox" class="scroll-hide svelte-1f354aw" dir="ltr" id="user-input" placeholder="Ask me any question" rows="1" style="overflow-y: scroll; height: 42px;"></textarea></label></div>
+<button class="lg primary  svelte-cmf5ev" id="component-9" style="flex-grow: 1; min-width: min(150px, 100%);"> Submit</button>
+</div>
+<div class="form svelte-sfqy0y hidden" style="flex-grow: 0; min-width: min(0px, 100%);">
+<div id="component-12" class="block svelte-90oupt hidden padded" style="border-style: solid; overflow: hidden; min-width: min(160px, 100%); border-width: var(--block-border-width);"> 
+<label class="svelte-1f354aw container"><span data-testid="block-info" class="svelte-1gfkn6j">Response</span>   
+<textarea data-testid="textbox" class="scroll-hide svelte-1f354aw" dir="ltr" placeholder="" rows="1" style="overflow-y: scroll; height: 42px;">
+</textarea></label></div></div></div></div>
+<div class="gallery svelte-13hsdno">Powered by WingsMaker</div> </div></div> 
+<footer class="svelte-2mz9lo"></footer></div>  
+<div class="toast-wrap svelte-pu0yf1"></div></div> 
+</div>
 </body>
-
-<script type="text/javascript" src="https://wingsmaker.github.io/Github/llm_chat.js" ></script>
-<script type="text/javascript" src="https://wingsmaker.github.io/Github/constants.js" ></script>
-<script type="text/javascript" src="https://wingsmaker.github.io/Github/ask-palm.js" ></script>
 
 <script>
 console.clear();
-let desktop_mode = 1;
-const synth = window.speechSynthesis;
-let voice = new SpeechSynthesisUtterance();
-var lang_type = ["US Male", "US Female", "SG", "TW", "CN"];
-var voice_type = ["en-US", "en-US-JennyNeural", "en-SG", "zh-TW", "zh-CN"];
-var voice_opt = 2;
-voice.rate = 1;
-voice.pitch = 1; 
-voice.volume = 1;
-voice.lang = voice_type[voice_opt];
-document.getElementById("tts").checked = false;
-document.getElementById("gemini").checked = false;
-document.getElementById("langcode").innerText = "Voice Type : " + lang_type[voice_opt];
+var messagePanel = document.getElementById("message-panel");
+var userinput = document.getElementById("user-input");
+userinput.value = "";
 
-desktop_screen();
-
-document.getElementById("lang").oninput = function() {
-	r = document.getElementById("lang").value;
-	var lang = voice_type[r]
-	voice.lang = lang;
-	document.getElementById("langcode").innerText = "Voice Type : " + lang_type[r];
-}
-
-function screen_update() {
-	desktop_mode = 1 - desktop_mode;
-	if (desktop_mode == 0) {
-		mobile_screen();
+function post_message(question, answer) {
+	if (answer.trim() == "") {
+		messagePanel.innerHTML = "";
+		return
 	} else {
-		desktop_screen();
+		messagePanel.innerHTML = "";
+		var botMessage = document.createElement("div");
+		var botQn = document.createElement("span");
+		botQn.innerText = question;
+		botMessage.appendChild(botQn);
+		messagePanel.appendChild(botMessage);
+		var botLn = document.createElement("span");
+		botLn.innerHTML = "<br><br>";
+		botMessage.appendChild(botLn);
+		messagePanel.appendChild(botMessage);
+		var botText = document.createElement("span");
+		botText.innerText = answer;
+		botMessage.appendChild(botText);
+		messagePanel.appendChild(botMessage);
+		messagePanel.scrollTop = messagePanel.scrollHeight;
+		userinput.value = "";
 	}
 }
 
-function mobile_screen() {
-	document.getElementById("chat").style.fontSize = "40px";
-	document.getElementById("input").style.fontSize = "40px";
-	document.getElementById("screen").value = "Desktop";
-	document.getElementById("screen").style.fontSize = "30px";
-	document.getElementById("screen").style.width = "150px";
-	document.getElementById("screen").style.height = "200px";
-	document.getElementById("voice").style.fontSize = "30px";
-	document.getElementById("voice").style.width = "150px";
-	document.getElementById("voice").style.height = "200px";
-	document.getElementById("clear").style.fontSize = "30px";
-	document.getElementById("clear").style.width = "150px";
-	document.getElementById("clear").style.height = "200px";
-	document.getElementById("send").style.fontSize = "30px";
-	document.getElementById("send").style.width = "150px";
-	document.getElementById("send").style.height = "200px";
-	desktop_mode = 0;
-}
+$('#component-6').click(function (e) {
+	userinput.value = "";
+	messagePanel.innerHTML = "";
+});	
 
-function desktop_screen() {
-	document.getElementById("chat").style.fontSize = "20px";
-	document.getElementById("input").style.fontSize = "20px";
-	document.getElementById("screen").value = "Mobile";
-	document.getElementById("screen").style.fontSize = "20px";
-	document.getElementById("screen").style.width = "120px";
-	document.getElementById("screen").style.height = "80px"; 
-	document.getElementById("voice").style.fontSize = "20px";
-	document.getElementById("voice").style.width = "120px";
-	document.getElementById("voice").style.height = "80px";
-	document.getElementById("clear").style.fontSize = "20px";
-	document.getElementById("clear").style.width = "120px";
-	document.getElementById("clear").style.height = "80px";
-	document.getElementById("send").style.fontSize = "20px";
-	document.getElementById("send").style.width = "120px";
-	document.getElementById("send").style.height = "80px";
-	desktop_mode = 1;
-}
+$('#component-9').click(function (e) {
+	askbot_question();
+});	
 
+function askbot_question() {
+	let prompt_text;
+	let requestBody;
+	let payload;
+	let msg = "";
+	var url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=..."; // replace ... with your api key
+	var qn = userinput.value;
+	if (qn == "") {
+		alert("Please enter the prompt for the chat");
+		return
+	}
+	prompt_text = {
+		'text': encodeURIComponent(qn)
+	}
+	parts = {
+		"parts": prompt_text
+	}
+	requestBody = {
+		"contents": parts
+	}
+	payload = {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(requestBody)
+	}
+	return fetch(url, payload)
+	.then(response => response.json())
+	.then( content => content.candidates[0].content )
+	.then(parts => parts.parts[0].text)
+	.then((msg) => {
+		msg = decodeURIComponent(msg);
+		post_message(qn, msg)
+	})
+	.catch(error => {
+		msg = "Error calling api : " + error;
+		post_message(qn, msg)
+	});	
+}
 
 </script>
-
 </html>
