@@ -1,7 +1,8 @@
 // Written by Kim Huat for information search based on sentimental analytics
 var faq_threshold = 0.8;
 var faq_list = [];
-var faq_scores = [];
+var fld_dict = {};
+var tbl_dict = {};
 
 var stopwords_list = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 
 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 
@@ -102,10 +103,12 @@ function magnitude(vec){
 function process_dictionary( content ) {
 	var lines = content.split("\n");
 	var cnt = lines.length;
-	var qns = "";
 	var x = 0;
+	var w = "";
+	var txt = "";
 	var msg = "";
 	var result = "";
+	var w_list = [];
 	for (x = 0; x < cnt; x++) {
 		result = lines[x];
 		result = result.replace(String.fromCharCode(10), "");
@@ -123,12 +126,47 @@ function process_dictionary( content ) {
 		}
 	}
 	faq_list.push( msg );
-	return;
+	var d = "";
+	var t = "";
+	var m = 0;
+	var n = 0;
+	var tbl_list = [];
+	for (n in faq_list){
+		w = faq_list[n];
+		w_list = w.split("\n");
+		w_list.forEach((x)=>{
+			txt = x.toLowerCase();
+			if ( txt.startsWith("data element : ") ) {
+				d = txt.replace("data element : ","");
+				fld_dict[d] = "";
+			}			
+			if ( txt.startsWith("tables : ") ) {
+				t = txt.replace("tables : ","");
+				fld_dict[d] = t;
+				tbl_list = t.split(",");
+				for (m in tbl_list) {
+					w = tbl_list[m];
+					if ( tbl_dict[ w ] == undefined ) {
+						tbl_dict[ w ] = [ d ];
+					} else {
+						tbl_dict[ w ].push( d );
+					}
+				}
+			}
+		})
+	}
+	msg = "Commands :\n";
+	msg = msg + "table list (keyword)\n";
+	msg = msg + "display table (keyword)\n";
+	msg = msg + "field list (keyword)\n";
+	msg = msg + "display field (keyword)\n";
+	return msg;
 }
 
 function faq_search(inp) {
 	var max_score = 0;
 	var inp_score = 0;
+	var faq_scores = [];
 	var score_list = [];
 	var answer = "";
 	var msg = "";
@@ -165,34 +203,107 @@ function faq_search(inp) {
 			faq_scores.push( 0 );
 		}
 	});
-	return;
+	return faq_scores;
 }
 
-function search_corpus( src, inp ) {
+function search_corpus( inp ) {
 	var max_score = 0;
 	var msg = "";
+	var m = 0;
 	var n = 0;
 	var txt = "";
-	if ( src == "f" ) {
-		txt = strokesfaq();	
-		process_dictionary( txt );
+	var faq_scores = [];
+	var mylist = [];
+	msg = inp.toLowerCase();
+	if ( msg.indexOf( "table list") >= 0 ) {
+		msg = msg.replace("table list","").replaceAll(" ","");
+		mylist = Object.keys(tbl_dict).sort();
+		mylist = mylist.filter( x => x.indexOf(msg) >= 0);
+		m = mylist.length;
+		msg = "# of tables = " + m.toString();
+		for (n in mylist){
+			msg = msg + "\n" + n.toString() + "\t" + mylist[n];
+		}
+		return msg;
 	}
-	if ( src == "g" ) {
-		txt = oncdmfaq();	
-		process_dictionary( txt );
+	if ( msg.indexOf( "display table") >= 0 ) {
+		msg = msg.replace("display table","").replaceAll(" ","");
+		msg = table_info( msg );
+		return msg;
 	}
-	if ( src == "h" ) {
-		txt = uc3_text();	
-		process_dictionary( txt );
+	if ( msg.indexOf( "field list") >= 0 ) {
+		msg = msg.replace("field list","").replaceAll(" ","");
+		var mylist = Object.keys(fld_dict).sort();
+		mylist = mylist.filter( x => x.indexOf(msg) >= 0);
+		m = mylist.length;
+		msg = "# of fields = " + m.toString();
+		for (n in mylist){
+			msg = msg + "\n" + n.toString() + "\t" + mylist[n];
+		}
+		return msg;
 	}
-	faq_search( inp );
+	if ( msg.indexOf( "display field") >= 0 ) {
+		msg = msg.replace("display field","").replaceAll(" ","");
+		var mylist = Object.keys(fld_dict);
+		n = mylist.indexOf(msg);
+		msg = faq_list[n];
+		return msg;
+	}
+	faq_scores = faq_search( inp );
 	max_score = Math.max.apply(null, faq_scores);
 	if ( max_score > 0 ) {
 		n = faq_scores.indexOf(max_score);
 		msg = "Search result for : " + inp + "\n\n";
 		msg = msg + faq_list[n] + "\n\n";
-		msg = msg.replaceAll("\n","<br>");
+	} else {
+		msg = "Unable to find the matching results.";
 	}
 	return msg;	
 }
 
+function table_info( tbl_name ) {
+	var t = tbl_name.toLowerCase();
+	var flist = [];
+	var txt = "";
+	var m = 0;
+	var n = 0;
+	var fields_list = [];
+	for(let fld in fld_dict){
+		flist = fld_dict[ fld ];
+		m = flist.indexOf(t);
+		if (m >= 0) {
+			fields_list.push( fld );
+		}		
+	}
+	m = fields_list.length;
+	if (m == 0) {
+		return "";
+	}
+	txt = fields_list.join(",");
+	txt = "\nFields : \n";
+	var k = 0;
+	for (n in fields_list){
+		k = k + 1;		
+		txt = txt + fields_list[n];
+		if (k < m) {
+			txt = txt + ",";
+		}
+		if ( (k % 5) == 0 ) {
+			txt = txt + "\n";
+		}
+	}
+	var msg = "Table : tbl_name\n# of fields = "  + m.toString();
+	msg = msg + txt;	
+	return msg;
+}
+
+function question_list() {
+	var txt = "";
+	var qn_list = [];
+	var cnt = faq_list.length;
+	for (x = 0; x < cnt; x++) {
+		txt = faq_list[x].split("\n")[0];
+		qn_list.push( txt );
+	}
+	return qn_list;
+}
