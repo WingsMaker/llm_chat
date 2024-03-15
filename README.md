@@ -5,7 +5,9 @@ Demo chatbot using Javascript (no python):<br>
 <br>
 <br>
 The code is written using native (vanilla) javascript, no need python codes.<br>
-![image](https://github.com/WingsMaker/llm_chat/assets/32192638/7bb1c5dd-4e39-40ba-87ed-c9a666a92505)
+<br>
+![image](https://github.com/WingsMaker/llm_chat/assets/32192638/92abdd37-8759-4983-ada0-8f31b9d6da5b)
+
 <br>
 <br>
 Source codes :<br>
