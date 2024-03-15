@@ -1,14 +1,13 @@
-# LLM Chat<br>
+# Gradio Javascript Demo<br>
 <br>
-English only:<br>
-<a href='https://wingsmaker.github.io/Github/khbot.html'>KH Bot</a><br>
+Demo chatbot using Javascript (no python):<br>
+<a href='https://wingsmaker.github.io/Github/faq_bot.html'>Strokes FAQ Bot</a><br>
 <br>
-
-Chinese/English:<br>
-<a href='https://wingsmaker.github.io/Github/llm_chat.html'>LLM Chat</a><br>
 <br>
-A web based LLM chatbot using Google Gemini api via makersuite.google.com
-with Gradio UI.<br>
+UI :
+Gradio style sheet khbot.css<br>
 <br>
 The code is written using native (vanilla) javascript, no need python codes.<br>
-![image](https://github.com/WingsMaker/llm_chat/assets/32192638/713fae71-9e36-4a72-b6ca-495ac6735a82)<br>
+
+![image](https://github.com/WingsMaker/llm_chat/assets/32192638/7bb1c5dd-4e39-40ba-87ed-c9a666a92505)
+
