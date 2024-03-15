@@ -7,9 +7,8 @@ Demo chatbot using Javascript (no python):<br>
 Source codes :<br>
 Chatbot <a href='https://raw.githubusercontent.com/WingsMaker/llm_chat/main/llm_chat.html'>LLM Chatbot</a><br>
 <br>
-UI : 
 <br>
-Gradio style sheet : <a href='https://raw.githubusercontent.com/WingsMaker/llm_chat/main/khbot.css'>khbot.css</a><br>
+style sheet : <a href='https://raw.githubusercontent.com/WingsMaker/llm_chat/main/khbot.css'>khbot.css</a><br>
 <br>
 The code is written using native (vanilla) javascript, no need python codes.<br>
 
