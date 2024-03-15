@@ -4,7 +4,7 @@ Demo chatbot using Javascript (no python):<br>
 <a href='https://wingsmaker.github.io/Github/faq_bot.html'>Strokes FAQ Bot</a><br>
 <br>
 <br>
-Example:<br>
+Source codes :<br>
 Chatbot <a href='https://raw.githubusercontent.com/WingsMaker/llm_chat/main/llm_chat.html'>LLM Chatbot</a><br>
 <br>
 UI : 
